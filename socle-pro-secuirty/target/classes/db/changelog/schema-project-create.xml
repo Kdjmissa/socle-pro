@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    
+    <property name="scole_schema_name" value="socle"/>
+    
+    <changeSet author="kdjimissa (generated)" id="1568631976080-1">
+        <createTable schemaName="${scole_schema_name}" tableName="parametre_etiquette">
+            <column name="code" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="libelle" type="VARCHAR(100)"/>
+            <column name="code_statut" type="VARCHAR(100)"/>
+            <column name="created_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="last_modified_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    
+    
+    <changeSet author="kdjimissa (generated)" id="1568631976080-3">
+        <createTable schemaName="${scole_schema_name}" tableName="parametre">
+            <column name="id" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="param_etiquette" type="VARCHAR(100)"/>
+            <column name="code" type="VARCHAR(100)"/>
+            <column name="libelle" type="VARCHAR(100)"/>
+            <column name="dernier_numero" type="INT"/>
+            <column name="created_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="last_modified_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    
+    
+    <changeSet author="kdjimissa (generated)" id="1568631976080-4">
+        <createTable schemaName="${scole_schema_name}" tableName="group_fonctions">
+            <column name="id" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(100)"/>
+            <column name="libelle" type="VARCHAR(100)"/>
+            <column name="code_statut" type="VARCHAR(100)"/>
+            <column name="dernier_numero" type="INT"/>
+            <column name="created_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="last_modified_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    
+    <changeSet author="kdjimissa (generated)" id="1568631976080-5">
+        <createTable schemaName="${scole_schema_name}" tableName="fonctions">
+            <column name="id" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(100)"/>
+            <column name="libelle" type="VARCHAR(100)"/>
+            <column name="code_statut" type="VARCHAR(100)"/>
+            <column name="group_fonction" type="VARCHAR(100)"/>
+            <column name="dernier_numero" type="INT"/>
+            <column name="created_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="last_modified_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+           
+    <changeSet author="kdjimissa (generated)" id="1568631976080-6">
+        <createTable schemaName="${scole_schema_name}" tableName="profil">
+            <column name="code" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="libelle" type="VARCHAR(100)"/>
+            <column name="code_statut" type="VARCHAR(100)"/>
+            <column name="dernier_numero" type="INT"/>
+            <column name="created_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="last_modified_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    
+        
+    <changeSet author="kdjimissa (generated)" id="1568631976080-7">
+        <createTable schemaName="${scole_schema_name}" tableName="fonctions_profils">
+            <column name="id" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="code_fonction" type="VARCHAR(100)"/>
+            <column name="code_profil" type="VARCHAR(100)"/>
+            <column name="niveau_habilitation" type="VARCHAR(100)"/>
+            <column name="dernier_numero" type="INT"/>
+            <column name="created_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="last_modified_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+        
+    <changeSet author="kdjimissa (generated)" id="uniq-1023-01">
+        <addPrimaryKey schemaName="${scole_schema_name}" columnNames="code" constraintName="param_etiq_uniq_key_constraint" tableName="parametre_etiquette"/>
+    </changeSet>
+    <changeSet author="kdjimissa (generated)" id="uniq-1023-02">
+        <addPrimaryKey schemaName="${scole_schema_name}" columnNames="id" constraintName="parametre_uniq_key_constraint" tableName="parametre"/>
+    </changeSet>
+    
+    <changeSet author="kdjimissa (generated)" id="uniq-1023-03">
+        <addPrimaryKey schemaName="${scole_schema_name}" columnNames="id" constraintName="group_fonctions_uniq_key_constraint" tableName="group_fonctions"/>
+    </changeSet>
+    
+    <changeSet author="kdjimissa (generated)" id="uniq-1023-04">
+        <addPrimaryKey schemaName="${scole_schema_name}" columnNames="id" constraintName="fonctions_uniq_key_constraint" tableName="fonctions"/>
+    </changeSet>
+                        
+    <changeSet author="kdjimissa (generated)" id="1568631976080-26201">
+        <addForeignKeyConstraint baseTableSchemaName="${scole_schema_name}" baseColumnNames="code_statut" baseTableName="parametre_etiquette" constraintName="param_etiquetteparam_forg_key" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="parametre" referencedTableSchemaName="${scole_schema_name}"/>
+    </changeSet>
+    <changeSet author="kdjimissa (generated)" id="1568631976080-26202">
+        <addForeignKeyConstraint baseTableSchemaName="${scole_schema_name}" baseColumnNames="param_etiquette" baseTableName="parametre" constraintName="param_etiquetteparam_forg_key2" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="code" referencedTableName="parametre_etiquette" referencedTableSchemaName="${scole_schema_name}"/>
+    </changeSet>
+    
+    <changeSet author="kdjimissa (generated)" id="1568631976080-26203">
+        <addForeignKeyConstraint baseTableSchemaName="${scole_schema_name}" baseColumnNames="code_statut" baseTableName="group_fonctions" constraintName="group_fonctionsparam_forg_key" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="parametre" referencedTableSchemaName="${scole_schema_name}"/>
+    </changeSet>
+    
+    <changeSet author="kdjimissa (generated)" id="1568631976080-26204">
+        <addForeignKeyConstraint baseTableSchemaName="${scole_schema_name}" baseColumnNames="code_statut" baseTableName="fonctions" constraintName="fonctionsparam_forg_key" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="parametre" referencedTableSchemaName="${scole_schema_name}"/>
+    </changeSet>
+    <changeSet author="kdjimissa (generated)" id="1568631976080-26205">
+        <addForeignKeyConstraint baseTableSchemaName="${scole_schema_name}" baseColumnNames="group_fonction" baseTableName="fonctions" constraintName="fonctions_group_fonction_forg_key" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="group_fonctions" referencedTableSchemaName="${scole_schema_name}"/>
+    </changeSet>
+    
+    <changeSet author="kdjimissa (generated)" id="uniq-1023-05">
+        <addPrimaryKey schemaName="${scole_schema_name}" columnNames="code" constraintName="profil_uniq_key_constraint" tableName="profil"/>
+    </changeSet>
+    
+    <changeSet author="kdjimissa (generated)" id="uniq-1023-06">
+        <addPrimaryKey schemaName="${scole_schema_name}" columnNames="id" constraintName="profil_fonct_uniq_key_constraint" tableName="fonctions_profils"/>
+    </changeSet>
+        
+    <changeSet author="kdjimissa (generated)" id="1568631976080-26206">
+        <addForeignKeyConstraint baseTableSchemaName="${scole_schema_name}" baseColumnNames="code_statut" baseTableName="profil" constraintName="profil_forg_key" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="parametre" referencedTableSchemaName="${scole_schema_name}"/>
+    </changeSet>
+    
+    
+    <changeSet author="kdjimissa (generated)" id="1568631976080-26207">
+        <addForeignKeyConstraint baseTableSchemaName="${scole_schema_name}" baseColumnNames="code_fonction" baseTableName="fonctions_profils" constraintName="profil_fonction_forg_key1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="fonctions" referencedTableSchemaName="${scole_schema_name}"/>
+    </changeSet>
+    
+    <changeSet author="kdjimissa (generated)" id="1568631976080-26208">
+        <addForeignKeyConstraint baseTableSchemaName="${scole_schema_name}" baseColumnNames="code_profil" baseTableName="fonctions_profils" constraintName="profil_fonction_forg_key2" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="code" referencedTableName="profil" referencedTableSchemaName="${scole_schema_name}"/>
+    </changeSet>
+    
+    <changeSet author="kdjimissa (generated)" id="27-10-2019-17-28">
+        <addForeignKeyConstraint baseTableSchemaName="${scole_schema_name}" baseColumnNames="niveau_habilitation" baseTableName="fonctions_profils" constraintName="27-10-2019-17-27" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="parametre" referencedTableSchemaName="${scole_schema_name}"/>
+    </changeSet>
+    
+    <changeSet author="kdjimissa (generated)" id="1568631976048880-788">
+        <createTable schemaName="${scole_schema_name}" tableName="utilisateur">
+            <column name="id" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nom" type="VARCHAR(100)"/>
+            <column name="prenoms" type="VARCHAR(100)"/>
+            <column name="pseudo" type="VARCHAR(100)"/>
+            <column name="mot_de_passe" type="VARCHAR(100)"/>
+            <column name="email" type="VARCHAR(100)"/>
+            <column name="telephone" type="VARCHAR(100)"/>
+            <column name="profession" type="VARCHAR(100)"/>
+            <column name="content_type" type="VARCHAR(255)"/>
+            <column name="content" type="BLOB"/>
+            <column name="activation_key_expiration_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="reset_key_expiration_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="pays" type="VARCHAR(100)"/>
+            <column name="ville" type="VARCHAR(100)"/>
+            <column name="code_statut" type="VARCHAR(100)"/>
+            <column name="moyen_paiement" type="VARCHAR(100)"/>
+            <column name="num_moyen_paiement" type="VARCHAR(100)"/>
+            <column name="banque" type="VARCHAR(100)"/>
+            <column name="num_compte" type="VARCHAR(100)"/>
+            <column name="referent" type="VARCHAR(100)"/>
+            <column name="reference_transfert" type="VARCHAR(100)"/>
+            <column name="dernier_numero" type="INT"/>
+            <column name="num_sec" type="INT"/>
+            <column name="created_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="last_modified_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    
+    
+    
+    <changeSet author="kdjimissa (generated)" id="uniq-1023-04025">
+        <addPrimaryKey schemaName="${scole_schema_name}" columnNames="id" constraintName="utilisateur_uniq_key_constraint" tableName="utilisateur"/>
+    </changeSet>
+    
+    
+    
+    <changeSet author="kdjimissa (generated)" id="1568631976080-26204855">
+        <addForeignKeyConstraint baseTableSchemaName="${scole_schema_name}" baseColumnNames="code_statut" baseTableName="utilisateur" constraintName="utilisateurparam_forg_key" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="parametre" referencedTableSchemaName="${scole_schema_name}"/>
+    </changeSet>
+    
+    
+    <changeSet author="kdjimissa (generated)" id="1568631976080-26204855588">
+        <addForeignKeyConstraint baseTableSchemaName="${scole_schema_name}" baseColumnNames="moyen_paiement" baseTableName="utilisateur" constraintName="utilisateurmoyen_paiement_forg_key" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="parametre" referencedTableSchemaName="${scole_schema_name}"/>
+    </changeSet>
+
+    <changeSet author="kdjimissa (generated)" id="1568631976048880-7880255">
+        <createTable schemaName="${scole_schema_name}" tableName="utilisateur_profil">
+            <column name="id" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utilisateur_id" type="VARCHAR(100)"/>
+            <column name="profil_id" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+    
+    <changeSet author="kdjimissa (generated)" id="uniq-1023-0402589">
+        <addPrimaryKey schemaName="${scole_schema_name}" columnNames="id" constraintName="user_profil_uniq_key_constraint" tableName="utilisateur_profil"/>
+    </changeSet>
+    
+    <changeSet author="kdjimissa (generated)" id="1568631976080-26204855-profil_id">
+        <addForeignKeyConstraint baseTableSchemaName="${scole_schema_name}" baseColumnNames="profil_id" baseTableName="utilisateur_profil" constraintName="user_profilparam_forg_key" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="code" referencedTableName="profil" referencedTableSchemaName="${scole_schema_name}"/>
+    </changeSet>
+    <changeSet author="kdjimissa (generated)" id="1568631976080-26204855-utilisateur_id">
+        <addForeignKeyConstraint baseTableSchemaName="${scole_schema_name}" baseColumnNames="utilisateur_id" baseTableName="utilisateur_profil" constraintName="user_profil_forg_key" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="utilisateur" referencedTableSchemaName="${scole_schema_name}"/>
+    </changeSet>
+    
+    
+    <changeSet author="kdjimissa (generated)" id="1568631732537-5">
+        <createTable  schemaName="${scole_schema_name}" tableName="file_store">
+            <column name="id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nom" type="VARCHAR(50)"/>
+            <column name="content_type" type="VARCHAR(255)"/>
+            <column name="content" type="BLOB"/>
+        </createTable>
+    </changeSet>
+    
+    
+    <changeSet author="kdjimissa (generated)" id="1568630363742-21">
+        <createTable  schemaName="${scole_schema_name}" tableName="pays">
+            <column name="alpha_2" type="VARCHAR(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="actif" type="BOOLEAN"/>
+            <column name="alpha_3" type="VARCHAR(3)"/>
+            <column name="domaine_internet" type="VARCHAR(3)"/>
+            <column name="indicatif" type="VARCHAR(10)"/>
+            <column name="nom" type="VARCHAR(50)"/>
+             <column name="content_type" type="VARCHAR(255)"/>
+            <column name="drapeau" type="BLOB"/>
+        </createTable>
+    </changeSet>
+    
+    <changeSet author="kdjimissa (generated)" id="1568630363742-69">
+        <addPrimaryKey schemaName="${scole_schema_name}" columnNames="alpha_2" constraintName="pays_pkey" tableName="pays"/>
+    </changeSet>
+    
+    <changeSet author="kdjimissa (generated)" id="1568630363742-38">
+        <createTable  schemaName="${scole_schema_name}" tableName="villes">
+            <column name="code" type="VARCHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="actif" type="BOOLEAN"/>
+            <column name="nom" type="VARCHAR(100)"/>
+            <column name="code_pays" type="VARCHAR(2)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="kdjimissa (generated)" id="1568630363742-83">
+        <addPrimaryKey schemaName="${scole_schema_name}" columnNames="code" constraintName="villes_pkey" tableName="villes"/>
+    </changeSet>
+    <changeSet author="kdjimissa (generated)" id="1568630363742-158">
+        <addForeignKeyConstraint baseTableSchemaName="${scole_schema_name}"  baseColumnNames="code_pays" baseTableName="villes" constraintName="fkawgbxa6r9id2p5vl3wv6ktss4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="alpha_2" referencedTableSchemaName="${scole_schema_name}" referencedTableName="pays"/>
+    </changeSet>
+    
+</databaseChangeLog>
+
+
