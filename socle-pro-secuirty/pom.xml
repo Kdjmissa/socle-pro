@@ -40,7 +40,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
             <version>${spring-security.version}</version>
@@ -56,7 +56,7 @@
             <version>${spring.common.version}</version>
         </dependency>
         
-         <dependency>
+        <dependency>
             <groupId>net.sourceforge.dynamicreports</groupId>
             <artifactId>dynamicreports-core</artifactId>
             <version>5.1.1-SNAPSHOT</version>
@@ -98,8 +98,14 @@
             <artifactId>maven-dependency-plugin</artifactId>
             <version>3.2.0</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>2.4.5</version>
+        </dependency>
     </dependencies>
-     <repositories>
+    <repositories>
         <repository>
             <id>sonatype-nexus-snapshots</id>
             <name>Sonatype Nexus Snapshots</name>

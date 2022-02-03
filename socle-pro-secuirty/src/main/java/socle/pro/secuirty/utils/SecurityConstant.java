@@ -13,7 +13,9 @@ package socle.pro.secuirty.utils;
 public class SecurityConstant {
 
     public static final String SCHEMA = "socle";
+    public static final String STATUT_PARAM_ETIQUETTE = "WORKFLOW_PARAM";
     public static final String STATUT_PARAM_CREE = "CRE";
+    
     public static final String ID_STATUT_PARAM_CREE = "WORK001";
     public static final String COLOR_CREE = "#1164A3";
     public static final String ACTION_EN_UTILISATION = "Activer";

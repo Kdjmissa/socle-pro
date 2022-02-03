@@ -6,6 +6,7 @@
 package socle.pro.secuirty.repositoy;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,4 +24,7 @@ public interface ProfilRepository extends JpaRepository<Profil, String> {
 
     @Query("SELECT new socle.pro.secuirty.dto.SimpleObjectDTO(p.code,p.libelle) FROM Profil  p where p.statut.code=:code")
     public List<SimpleObjectDTO> findProfilByStatut(@Param("code") String code);
+
+    @Query("SELECT MAX(p.dernierNumero) FROM Profil p ")
+    public Optional<Integer> findDernierNumeroProfil();
 }

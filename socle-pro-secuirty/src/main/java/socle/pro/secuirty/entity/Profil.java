@@ -38,6 +38,10 @@ public class Profil extends MappedEntity implements Serializable {
     @Column(name = "dernier_numero")
     private Integer dernierNumero = 0;
 
+    public Profil() {
+    }
+
+    
     public Profil(String code, String libelle, Parametre statut) {
         this.code = code;
         this.libelle = libelle;

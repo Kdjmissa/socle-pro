@@ -47,6 +47,25 @@ public class Parametre extends  MappedEntity implements Serializable {
     @Column(name = "dernier_numero")
     private Integer dernierNumero = 0;
 
+    public Parametre() {
+    }
+
+    public Parametre(ParametreEtiquette parametreEtiquette, String code, String libelle) {
+        this.parametreEtiquette = parametreEtiquette;
+        this.code = code;
+        this.libelle = libelle;
+    }
+
+    
+    public Parametre(String id, ParametreEtiquette parametreEtiquette, String code, String libelle) {
+        this.id = id;
+        this.parametreEtiquette = parametreEtiquette;
+        this.code = code;
+        this.libelle = libelle;
+    }
+
+    
+    
     public String getStatutBackColor() {
         if (this.code == null) {
             return "";

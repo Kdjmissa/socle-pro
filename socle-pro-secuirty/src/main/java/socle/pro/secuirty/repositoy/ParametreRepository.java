@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import socle.pro.secuirty.dto.SimpleObjectDTO;
+import socle.pro.secuirty.entity.Fonction;
 import socle.pro.secuirty.entity.Parametre;
 
 /**
@@ -18,6 +19,9 @@ import socle.pro.secuirty.entity.Parametre;
  */
 public interface ParametreRepository extends JpaRepository<Parametre, String> {
 
+    @Query("SELECT p FROM Parametre p where p.code=:code and p.parametreEtiquette.code=:etiqCode")
+    public Parametre findStatutByCodeAndEtiquetteCode(@Param("code") String code,@Param("etiqCode")String etiqCode);
+
     @Query("SELECT new socle.pro.secuirty.dto.SimpleObjectDTO(p) FROM Parametre p where p.parametreEtiquette.code=:code and p.parametreEtiquette.statut.code=:statutcode")
-    public List<SimpleObjectDTO> findFonctionByParamEtiquetteCodeAndStatut(@Param("code") String code,@Param("statutcode") String statutcode);
+    public List<SimpleObjectDTO> findFonctionByParamEtiquetteCodeAndStatut(@Param("code") String code, @Param("statutcode") String statutcode);
 }

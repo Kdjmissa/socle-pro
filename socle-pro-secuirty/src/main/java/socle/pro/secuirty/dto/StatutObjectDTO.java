@@ -5,6 +5,8 @@
  */
 package socle.pro.secuirty.dto;
 
+import socle.pro.secuirty.entity.Parametre;
+
 /**
  *
  * @author kdjimissa
@@ -12,6 +14,7 @@ package socle.pro.secuirty.dto;
 public class StatutObjectDTO {
 
     private String id;
+    private String code;
     private String libelle;
     private String action;
     private String color;
@@ -21,11 +24,25 @@ public class StatutObjectDTO {
     public StatutObjectDTO() {
     }
 
-    public StatutObjectDTO(String id, String libelle) {
+    public StatutObjectDTO(String id, String code, String libelle, String action, String color, String codeCouleur, String codeCouleurText) {
         this.id = id;
+        this.code = code;
         this.libelle = libelle;
+        this.action = action;
+        this.color = color;
+        this.codeCouleur = codeCouleur;
+        this.codeCouleurText = codeCouleurText;
     }
 
+    
+    public StatutObjectDTO(Parametre parametre) {
+        this.id = parametre.getId();
+        this.code= parametre.getCode();
+        this.libelle = parametre.getLibelle();
+        this.codeCouleur= parametre.getStatutBackColor();
+        this.codeCouleurText= parametre.getStatutTextColor();
+        this.action= parametre.getActionByStatut(parametre.getCode());
+    }
     
     public StatutObjectDTO(String id, String libelle, String action, String color, String codeCouleur, String codeCouleurText) {
         this.id = id;
@@ -88,12 +105,19 @@ public class StatutObjectDTO {
         this.codeCouleurText = codeCouleurText;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     @Override
     public String toString() {
-        return "statutObjectDTO{" + "id=" + id + ", libelle="
-                + libelle + ", action=" + action + ", color="
-                + color + ", codeCouleur="
-                + codeCouleur + ", codeCouleurText=" + codeCouleurText + '}';
+        return "StatutObjectDTO{" + "id=" + id + ", code=" + code + ", libelle=" + libelle + ", action=" + action + ", color=" + color + ", codeCouleur=" + codeCouleur + ", codeCouleurText=" + codeCouleurText + '}';
     }
+
+    
 
 }

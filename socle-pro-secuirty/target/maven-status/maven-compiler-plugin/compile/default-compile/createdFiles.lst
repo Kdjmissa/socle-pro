@@ -20,6 +20,7 @@ socle\pro\secuirty\entity\ProfilFonctions.class
 socle\pro\secuirty\repositoy\ProfilRepository.class
 socle\pro\secuirty\repositoy\ParametreRepository.class
 socle\pro\secuirty\utils\SocleConstant.class
+socle\pro\secuirty\config\Config.class
 socle\pro\secuirty\dto\StatutObjectDTO.class
 socle\pro\secuirty\entity\GroupFonction.class
 socle\pro\secuirty\entity\FileStore.class
