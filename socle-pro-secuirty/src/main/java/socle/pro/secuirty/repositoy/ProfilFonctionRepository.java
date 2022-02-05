@@ -26,4 +26,7 @@ public interface ProfilFonctionRepository extends JpaRepository<ProfilFonctions,
     
     @Query("SELECT new socle.pro.secuirty.dto.MapfonctionHabilitationDTO(fp) FROM ProfilFonctions fp where fp.profil.code=:id and fp.profil.statut.code=:statutCode")
     public List<MapfonctionHabilitationDTO> findProfilFonctionByProfilIdAndStatut(@Param("id") String id,@Param("statutCode") String statutCode);
+
+    @Query("SELECT fp FROM ProfilFonctions fp where fp.profil.code=:code")
+    public List<ProfilFonctions> findByProfilId( @Param("code") String code);
 }

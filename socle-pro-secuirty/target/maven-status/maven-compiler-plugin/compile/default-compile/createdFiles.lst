@@ -1,8 +1,10 @@
 socle\pro\secuirty\puglin\ErrorResponse$ApiError.class
 socle\pro\secuirty\puglin\ErrorResponse.class
+socle\pro\secuirty\repositoy\UtilisateurRepository.class
 socle\pro\secuirty\ressource\ProfilRessource.class
 socle\pro\secuirty\entity\Ville.class
 socle\pro\secuirty\dto\SimpleObjectDTO.class
+socle\pro\secuirty\utils\Pager.class
 socle\pro\secuirty\entity\Utilisateur.class
 socle\pro\secuirty\implementation\ProfilInterface.class
 socle\pro\secuirty\dto\MapfonctionHabilitationDTO.class
@@ -20,13 +22,14 @@ socle\pro\secuirty\entity\ProfilFonctions.class
 socle\pro\secuirty\repositoy\ProfilRepository.class
 socle\pro\secuirty\repositoy\ParametreRepository.class
 socle\pro\secuirty\utils\SocleConstant.class
-socle\pro\secuirty\config\Config.class
 socle\pro\secuirty\dto\StatutObjectDTO.class
 socle\pro\secuirty\entity\GroupFonction.class
+socle\pro\secuirty\repositoy\UtilisateurProfilRepository.class
 socle\pro\secuirty\entity\FileStore.class
 socle\pro\secuirty\puglin\ErrorInterface.class
 socle\pro\secuirty\puglin\InterneExpection.class
 socle\pro\secuirty\repositoy\ProfilFonctionRepository.class
+socle\pro\secuirty\utils\NombreEnLettre.class
 socle\pro\secuirty\services\ProfilService.class
 socle\pro\secuirty\puglin\ErrorCode.class
 socle\pro\secuirty\entity\Pays.class

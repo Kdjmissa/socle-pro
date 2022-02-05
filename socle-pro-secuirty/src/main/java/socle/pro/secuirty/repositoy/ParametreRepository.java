@@ -24,4 +24,7 @@ public interface ParametreRepository extends JpaRepository<Parametre, String> {
 
     @Query("SELECT new socle.pro.secuirty.dto.SimpleObjectDTO(p) FROM Parametre p where p.parametreEtiquette.code=:code and p.parametreEtiquette.statut.code=:statutcode")
     public List<SimpleObjectDTO> findFonctionByParamEtiquetteCodeAndStatut(@Param("code") String code, @Param("statutcode") String statutcode);
+    
+    @Query("SELECT new socle.pro.secuirty.dto.SimpleObjectDTO(p) FROM Parametre p where p.parametreEtiquette.code=:code")
+    public List<SimpleObjectDTO> findFonctionByParamEtiquette(@Param("code") String code);
 }

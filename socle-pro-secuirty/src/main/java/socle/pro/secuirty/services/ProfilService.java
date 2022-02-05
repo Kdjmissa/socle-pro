@@ -9,14 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import socle.pro.secuirty.dto.MapfonctionHabilitationDTO;
 import socle.pro.secuirty.dto.ProfilDTO;
 import socle.pro.secuirty.dto.StatutObjectDTO;
-import socle.pro.secuirty.entity.Parametre;
 import socle.pro.secuirty.entity.Profil;
+import socle.pro.secuirty.entity.ProfilFonctions;
 import socle.pro.secuirty.implementation.ProfilInterface;
 import socle.pro.secuirty.puglin.InterneExpection;
+import socle.pro.secuirty.repositoy.FonctionRepository;
 import socle.pro.secuirty.repositoy.ParamEtiquetteRepository;
 import socle.pro.secuirty.repositoy.ParametreRepository;
 import socle.pro.secuirty.repositoy.ProfilFonctionRepository;
@@ -45,6 +49,9 @@ public class ProfilService implements ProfilInterface {
     @Autowired
     private ParamEtiquetteRepository paramEtiquetteRepository;
 
+    @Autowired
+    private FonctionRepository fonctionRepository;
+
     @Override
     public ProfilDTO saveProfil(ProfilDTO profilDTO) {
         this.profilValidation(profilDTO);
@@ -55,6 +62,11 @@ public class ProfilService implements ProfilInterface {
                 SecurityConstant.STATUT_PARAM_CREE));
         p.setDernierNumero(this.profilRepository.findDernierNumeroProfil().get());
         this.profilRepository.save(p);
+        if (!profilDTO.getFonctionHabilitationDTOs().isEmpty()) {
+            profilDTO.getFonctionHabilitationDTOs().forEach(habi -> {
+                this.saveFonctionHabilitation(habi);
+            });
+        }
 
         return this.convertToDTO(p);
     }
@@ -104,13 +116,21 @@ public class ProfilService implements ProfilInterface {
     }
 
     @Override
-    public List<ProfilDTO> profilListing() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Page<Profil> profilListing(int page, int size, String sort) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(sort));
+        return profilRepository.findAll(pageRequest);
     }
 
     @Override
     public void deleteProfil(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Profil profil = this.profilRepository.findProfilByCode(id);
+        if (profil.getStatut().getCode().equals(SecurityConstant.STATUT_PARAM_EN_UTILISATION)) {
+            throw new InterneExpection("Ce profil est en cours d'utilisation ", null);
+        } else if (profil.getStatut().getCode().equals(SecurityConstant.STATUT_PARAM_OBSOLETE)) {
+            throw new InterneExpection("Ce profil est utilisé et ne peut être supprimer ! ", null);
+        }
+        this.deleteProfilHabilitations(profil);
+        this.profilRepository.delete(profil);
     }
 
     public ProfilDTO convertToDTO(Profil profil) {
@@ -122,6 +142,21 @@ public class ProfilService implements ProfilInterface {
             profilDTO.setStatut(new StatutObjectDTO(profil.getStatut()));
         } else {
             throw new InterneExpection(" Ce profil n'existe pas ", null);
+        }
+        return profilDTO;
+    }
+
+    @Override
+    public ProfilDTO updateProfil(ProfilDTO profilDTO) {
+        Profil profil = new Profil();
+        profil.setCode(profilDTO.getCode());
+        profil.setLibelle(profilDTO.getLibelle());
+        profil = this.profilRepository.save(profil);
+        profilDTO = this.getProfil(profil.getCode());
+        if (!profilDTO.getFonctionHabilitationDTOs().isEmpty()) {
+            profilDTO.getFonctionHabilitationDTOs().forEach(habi -> {
+                this.saveFonctionHabilitation(habi);
+            });
         }
         return profilDTO;
     }
@@ -152,13 +187,52 @@ public class ProfilService implements ProfilInterface {
         }
     }
 
-    @Override
-    public ProfilDTO updateProfil(ProfilDTO profilDTO) {
-        Profil profil = new Profil();
-        profil.setCode(profilDTO.getCode());
-        profil.setLibelle(profilDTO.getLibelle());
-        profil = this.profilRepository.save(profil);
-        profilDTO = this.getProfil(profil.getCode());
-        return profilDTO;
+    /**
+     *
+     * @param habilitationDTO
+     * @return
+     */
+    public MapfonctionHabilitationDTO saveFonctionHabilitation(MapfonctionHabilitationDTO habilitationDTO) {
+        ProfilFonctions habilitation = new ProfilFonctions();
+        this.habilitationValidation(habilitationDTO);
+        if (habilitationDTO.getId() == null) {
+            habilitation.setProfil(this.profilRepository.findProfilByCode(habilitationDTO.getIdProfil()));
+            habilitation.setFonction(this.fonctionRepository.findFonctionById(habilitationDTO.getIdFonction()));
+            habilitation.setHabilitation(this.parametreRepository.getOne(habilitationDTO.getIdHabilitation()));
+        } else {
+            habilitation = this.profilFonctionRepository.findProfilFonctionById(habilitation.getId());
+            habilitation.setFonction(this.fonctionRepository.findFonctionById(habilitationDTO.getIdFonction()));
+            habilitation.setHabilitation(this.parametreRepository.getOne(habilitationDTO.getIdHabilitation()));
+        }
+
+        habilitation = this.profilFonctionRepository.save(habilitation);
+        return this.mappedHabilitationToDTO(habilitation);
+    }
+
+    public MapfonctionHabilitationDTO mappedHabilitationToDTO(ProfilFonctions profilFonctions) {
+        MapfonctionHabilitationDTO habilitationDTO = new MapfonctionHabilitationDTO(profilFonctions);
+        habilitationDTO.setEdit(false);
+        return habilitationDTO;
+    }
+
+    public void habilitationValidation(MapfonctionHabilitationDTO habilitationDTO) {
+        if (habilitationDTO.getIdProfil() == null) {
+            throw new InterneExpection("Profil inconnu ", null);
+        }
+        if (habilitationDTO.getIdFonction() == null) {
+            throw new InterneExpection("La fonction est obligatoire ", null);
+        }
+        if (habilitationDTO.getIdHabilitation() == null) {
+            throw new InterneExpection("Le niveau d'habilitation est obligatoire ", null);
+        }
+    }
+
+    private void deleteProfilHabilitations(Profil profil) {
+        List<ProfilFonctions> habilitations = this.profilFonctionRepository.findByProfilId(profil.getCode());
+        if (!habilitations.isEmpty()) {
+            habilitations.forEach(t -> {
+                this.profilFonctionRepository.delete(t);
+            });
+        }
     }
 }

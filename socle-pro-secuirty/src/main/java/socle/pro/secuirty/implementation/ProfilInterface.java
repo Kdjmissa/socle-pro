@@ -6,6 +6,7 @@
 package socle.pro.secuirty.implementation;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
 import socle.pro.secuirty.dto.ProfilDTO;
 import socle.pro.secuirty.entity.Profil;
 
@@ -17,7 +18,7 @@ public interface ProfilInterface {
     public ProfilDTO saveProfil(ProfilDTO profilDTO);
     public ProfilDTO getProfil(String id);
     public Profil changeStatut(String id);
-    public List<ProfilDTO> profilListing();
+    public Page<Profil> profilListing(int page, int size , String sort);
     public void deleteProfil(String id);
     public ProfilDTO updateProfil(ProfilDTO profilDTO);
     
